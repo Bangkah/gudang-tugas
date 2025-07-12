@@ -1,17 +1,22 @@
 <?php
-include "config/db.php";
+session_start();
+include 'config/db.php';
 
-if (isset($_FILES['tugas']) && isset($_POST['deskripsi'])) {
-    $fileName = basename($_FILES['tugas']['name']);
-    $targetDir = "uploads/";
-    $targetFile = $targetDir . $fileName;
-    $deskripsi = $conn->real_escape_string($_POST['deskripsi']);
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['tugas'])) {
+    $user_id = $_SESSION['user_id'];
+    $nama_file = basename($_FILES['tugas']['name']);
+    $deskripsi = $_POST['deskripsi'];
+    $target_dir = "uploads/";
+    $target_file = $target_dir . $nama_file;
 
-    if (move_uploaded_file($_FILES['tugas']['tmp_name'], $targetFile)) {
-        $conn->query("INSERT INTO tugas (nama_file, deskripsi) VALUES ('$fileName', '$deskripsi')");
+    if (move_uploaded_file($_FILES['tugas']['tmp_name'], $target_file)) {
+        $stmt = $conn->prepare("INSERT INTO tugas (user_id, nama_file, deskripsi) VALUES (?, ?, ?)");
+        $stmt->bind_param("iss", $user_id, $nama_file, $deskripsi);
+        $stmt->execute();
         header("Location: index.php");
+        exit;
     } else {
-        echo "Upload gagal.";
+        echo "Gagal upload file.";
     }
 }
 ?>
