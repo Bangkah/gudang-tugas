@@ -6,7 +6,7 @@ Selamat datang di proyek **Web Tugas Mahasiswa** — sebuah platform sederhana y
 
 🔗 Silakan kunjungi website ini secara langsung di:
 
-👉 [https://webtugas.infinityfreeapp.com](https://webtugas.infinityfreeapp.com)
+👉 [https://catatan-kuliah.kesug.com/](https://catatan-kuliah.kesug.com/)
 
 ---
 
